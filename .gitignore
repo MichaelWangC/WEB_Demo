@@ -1,2 +1,5 @@
 .DS_Store
-.iml
+*.iml
+*/.idea
+CRM_API/out/*
+CRM_API/web/WEB-INF/classes
