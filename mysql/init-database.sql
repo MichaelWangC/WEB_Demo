@@ -1,15 +1,19 @@
 -- -------------------------------------------------------------------------------------------------
 -- program name:   init-database.sql
 -- function:       init datebase 创建数据库和对应表
--- author:         Zhuyz
--- release date:   24 May, 2016
+-- author:         wangc
+-- release date:   21 August, 2017
 -- -------------------------------------------------------------------------------------------------
 
 
 -- step 1 ------------------------------------------------------------------------------------------
 -- create datebase
 -- -------------------------------------------------------------------------------------------------
-Create Database If Not Exists CRMDB;
+-- 创建数据库时,设置数据库的编码方式 
+-- CHARACTER SET:指定数据库采用的字符集,utf8不能写成utf-8
+-- COLLATE:指定数据库字符集的排序规则,utf8的默认排序规则为utf8_general_ci（通过show character set查看）
+-- drop database if EXISTS CRMDB;
+create database if EXISTS CRMDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 use CRMDB;
 
 -- step 2 ------------------------------------------------------------------------------------------
@@ -23,7 +27,7 @@ CREATE TABLE IF NOT EXISTS tsupplier (
 	create_time DATETIME, -- 创建时间
 	modify_time DATETIME, -- 修改时间
 	PRIMARY KEY ( supplier_id )
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- step 3 ------------------------------------------------------------------------------------------
 -- create table employee 员工表
@@ -34,12 +38,12 @@ CREATE TABLE IF NOT EXISTS temployee (
 	role_id int, -- 角色id 关联员工角色表 employee role
 	supplier_id int, -- 所属供应商 关联供应商表supplier
 	employee_mobile char(20) UNIQUE, -- 手机号
-	login_token char(20) UNIQUE, -- 登录校验token
-	password char(40),  -- 密码
+	login_token char(255) UNIQUE, -- 登录校验token
+	password text,  -- 密码
 	create_time DATETIME, -- 创建时间
 	modify_time DATETIME, -- 修改时间
 	PRIMARY KEY ( employee_id )
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- step 4 ------------------------------------------------------------------------------------------
 -- create table 客户表 customer
@@ -51,7 +55,7 @@ CREATE TABLE IF NOT EXISTS tcustomer (
 	create_time DATETIME, -- 创建时间
 	modify_time DATETIME, -- 修改时间
 	PRIMARY KEY ( customer_id )
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- step 5 ------------------------------------------------------------------------------------------
 -- create table 联系人表 contactor
@@ -66,7 +70,7 @@ CREATE TABLE IF NOT EXISTS tcontactor (
 	login_token char(20) UNIQUE, -- 登录校验token
 	password char(40),  -- 密码
 	PRIMARY KEY ( contactor_id )
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- step 6 ------------------------------------------------------------------------------------------
 -- create table 样板表 templet
@@ -83,7 +87,7 @@ CREATE TABLE IF NOT EXISTS ttemplet (
 	created_id int, -- 创建人id  关联员工表 employee
 	status varchar(40), -- 当前状态
 	PRIMARY KEY ( templet_id )
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- step 7 ------------------------------------------------------------------------------------------
 -- create table 样板状态历史表 templet status
@@ -94,7 +98,7 @@ CREATE TABLE IF NOT EXISTS ttempletstatus (
 	templet_id int, -- 样板id 关联样板表 templet
 	change_info varchar(255), -- 变更信息
 	PRIMARY KEY ( status_id )
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- step 8 ------------------------------------------------------------------------------------------
 -- create table 订单表 order
@@ -110,7 +114,7 @@ CREATE TABLE IF NOT EXISTS torder (
 	created_id int, -- 创建人id  关联员工表 employee
 	status varchar(40), -- 当前状态
 	PRIMARY KEY ( order_id )
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- step 9 ------------------------------------------------------------------------------------------
 -- create table 订单状态变更表 order status
@@ -121,7 +125,7 @@ CREATE TABLE IF NOT EXISTS torderstatus (
 	order_id int, -- 订单id 关联订单表 order
 	change_info varchar(255), -- 变更信息
 	PRIMARY KEY ( status_id )
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- step 10 ------------------------------------------------------------------------------------------
 -- create table 员工角色表 employee role
@@ -130,7 +134,7 @@ CREATE TABLE IF NOT EXISTS temployeerole (
 	role_id  int AUTO_INCREMENT, -- 角色id
 	role_name varchar(20) UNIQUE, -- 角色名
 	PRIMARY KEY ( role_id )
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- step 11 ------------------------------------------------------------------------------------------
 -- create table 联系人角色表 contactor role
@@ -139,4 +143,4 @@ CREATE TABLE IF NOT EXISTS tcontactorrole (
 	role_id  int AUTO_INCREMENT, -- 角色id
 	role_name varchar(20) UNIQUE, -- 角色名
 	PRIMARY KEY ( role_id )
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
