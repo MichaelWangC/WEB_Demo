@@ -9,9 +9,13 @@ id:必须与对应接口的某个对应的方法名一致
 
     <select id="findAllSupplier" resultType="Supplier">
         select
-        supplier_id supplierId,
-        supplier_name supplierName
-        from tsupplier
+          supplier_id supplierId,
+          supplier_name supplierName,
+          owner_id ownerId,
+          is_checked isChecked,
+          DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%S') createTime,
+          DATE_FORMAT(modify_time,'%Y-%m-%d %H:%i:%S') modifyTime
+        from tsupplier;
     </select>
 
 </mapper>

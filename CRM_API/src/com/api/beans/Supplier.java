@@ -4,15 +4,15 @@ import java.util.Date;
 
 /**
  * Created by wangc on 2017/8/23.
- * 供应商
+ * 供应商 beans
  */
 public class Supplier {
     private int supplierId;
     private String supplierName;
     private int ownerId;
     private int isChecked; // 是否审核通过 1通过 0未通过
-    private Date createTime;
-    private Date modifyTime;
+    private String createTime;
+    private String modifyTime;
 
     public int getSupplierId() {
         return supplierId;
@@ -46,19 +46,19 @@ public class Supplier {
         this.isChecked = isChecked;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getModifyTime() {
+    public String getModifyTime() {
         return modifyTime;
     }
 
-    public void setModifyTime(Date modifyTime) {
+    public void setModifyTime(String modifyTime) {
         this.modifyTime = modifyTime;
     }
 }

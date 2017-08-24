@@ -1,5 +1,6 @@
 package com.api.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.api.beans.Supplier;
 import com.api.service.SupplierService;
 import org.springframework.stereotype.Controller;
@@ -28,12 +29,16 @@ public class SupplierController {
     @RequestMapping("/getAllSupplier")
     public void getAllSupplier(HttpServletResponse response){
         List<Supplier> list = supplierService.findAllSupplier();
-        String allSupplier = list.toString();
-//        Json
-        PrintWriter out = null;
+
+        JSONObject object = new JSONObject();
+        object.put("errcode","1");
+        object.put("errmsg","ok");
+        object.put("list",list);
         try {
-            out = response.getWriter();
-            out.write(allSupplier);
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("text/html; charset=utf-8");
+            PrintWriter out = response.getWriter();
+            out.write(object.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
         }
