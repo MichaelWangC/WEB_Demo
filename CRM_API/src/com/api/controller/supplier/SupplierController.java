@@ -1,8 +1,9 @@
-package com.api.controller;
+package com.api.controller.supplier;
 
 import com.alibaba.fastjson.JSONObject;
 import com.api.beans.Supplier;
 import com.api.service.SupplierService;
+import com.api.util.ConstantUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -31,8 +32,8 @@ public class SupplierController {
         List<Supplier> list = supplierService.findAllSupplier();
 
         JSONObject object = new JSONObject();
-        object.put("errcode","1");
-        object.put("errmsg","ok");
+        object.put("errcode", ConstantUtil.ERROR_CODE_OK);
+        object.put("errmsg", "ok");
         object.put("list",list);
         try {
             response.setCharacterEncoding("utf-8");

@@ -16,4 +16,13 @@
     <!-- 开启注解 -->
     <mvc:annotation-driven />
 
+    <!-- 拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"></mvc:mapping>
+            <mvc:exclude-mapping path="/**/login"></mvc:exclude-mapping>
+            <bean class="com.api.filter.LoginInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>

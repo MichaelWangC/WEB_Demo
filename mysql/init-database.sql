@@ -13,7 +13,7 @@
 -- CHARACTER SET:指定数据库采用的字符集,utf8不能写成utf-8
 -- COLLATE:指定数据库字符集的排序规则,utf8的默认排序规则为utf8_general_ci（通过show character set查看）
 -- drop database if EXISTS CRMDB;
-create database if EXISTS CRMDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+create database IF NOT EXISTS CRMDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 use CRMDB;
 
 -- step 2 ------------------------------------------------------------------------------------------
@@ -35,10 +35,10 @@ CREATE TABLE IF NOT EXISTS tsupplier (
 CREATE TABLE IF NOT EXISTS temployee (
 	employee_id int AUTO_INCREMENT,
 	employee_name char(40), -- 员工姓名
+	employee_logincode varchar(40) UNIQUE, --登录名
 	role_id int, -- 角色id 关联员工角色表 employee role
 	supplier_id int, -- 所属供应商 关联供应商表supplier
 	employee_mobile char(20) UNIQUE, -- 手机号
-	login_token char(255) UNIQUE, -- 登录校验token
 	password text,  -- 密码
 	create_time DATETIME, -- 创建时间
 	modify_time DATETIME, -- 修改时间
@@ -51,7 +51,8 @@ CREATE TABLE IF NOT EXISTS temployee (
 CREATE TABLE IF NOT EXISTS tcustomer (
 	customer_id int AUTO_INCREMENT,
 	customer_name char(40) UNIQUE, -- 客户名称
-	owner_id int, -- 关联联系人表 contactor
+	owner_id int, -- 关联供应商表 tsupplier supplier_id
+	creator_id int, -- 关联 员工表 employee_id
 	create_time DATETIME, -- 创建时间
 	modify_time DATETIME, -- 修改时间
 	PRIMARY KEY ( customer_id )
@@ -62,13 +63,15 @@ CREATE TABLE IF NOT EXISTS tcustomer (
 -- -------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS tcontactor (
 	contactor_id int AUTO_INCREMENT,
+	contactor_logincode varchar(40) UNIQUE, --登录名
 	contactor_name char(40),
 	role_id int, -- 角色id 关联联系人角色表 employee role
 	contactor_mobile char(20) UNIQUE, -- 手机号
 	create_time DATETIME, -- 创建时间
 	modify_time DATETIME, -- 修改时间
-	login_token char(20) UNIQUE, -- 登录校验token
 	password char(40),  -- 密码
+	creator_id int, -- 关联 员工表 employee_id
+	customer_id int, -- 关联 客户表 customer_id
 	PRIMARY KEY ( contactor_id )
 )CHARACTER SET utf8 COLLATE utf8_general_ci;
 

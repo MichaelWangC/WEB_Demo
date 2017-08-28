@@ -1,8 +1,9 @@
-package com.api.controller;
+package com.api.controller.customer;
 
 import com.alibaba.fastjson.JSONObject;
 import com.api.beans.Customer;
 import com.api.service.CustomerService;
+import com.api.util.ConstantUtil;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,14 +31,14 @@ public class CustomerController {
             out = response.getWriter();
 
             customerService.addCustomer(customer);
-            object.put("errcode","1");
-            object.put("errmsg","创建成功");
-        }catch (DuplicateKeyException e) {
-            object.put("errcode","-1");
+            object.put("errcode", ConstantUtil.ERROR_CODE_OK);
+            object.put("errmsg", "创建成功");
+        } catch (DuplicateKeyException e) {
+            object.put("errcode", ConstantUtil.ERROR_CODE_FAIL);
             object.put("errmsg", "客户名称已存在");
             e.printStackTrace();
         } catch (Exception e) {
-            object.put("errcode","-1");
+            object.put("errcode", ConstantUtil.ERROR_CODE_FAIL);
             object.put("errmsg", e.getMessage());
             e.printStackTrace();
         } finally {
@@ -48,7 +49,23 @@ public class CustomerController {
     }
 
     @RequestMapping("/customerList")
-    public void getCustomerList(String start, String limit, String custname, HttpServletResponse response) {
+    public void getCustomerList(Integer start, Integer limit, String custname, HttpServletResponse response) {
+        JSONObject object = new JSONObject();
+        PrintWriter out = null;
+        try {
+            out = response.getWriter();
 
+            object.put("errcode", ConstantUtil.ERROR_CODE_OK);
+            object.put("errmsg", "创建成功");
+            object.put("params", start.toString()+' '+limit.toString()+' '+custname);
+        } catch (Exception e) {
+            object.put("errcode", ConstantUtil.ERROR_CODE_FAIL);
+            object.put("errmsg", e.getMessage());
+            e.printStackTrace();
+        } finally {
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("text/html; charset=utf-8");
+            out.write(object.toJSONString());
+        }
     }
 }
