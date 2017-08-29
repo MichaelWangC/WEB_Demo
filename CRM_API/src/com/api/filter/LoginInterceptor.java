@@ -16,16 +16,16 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         String userId = (String) httpServletRequest.getSession().getAttribute(ConstantUtil.SESSION_USER_ID);
-        if (userId == null || "".equals(userId)) {
-            JSONObject object = new JSONObject();
-            object.put("errcode", ConstantUtil.ERROR_CODE_LOGIN);
-            object.put("errmsg","未登录或长时间未操作，请登录");
-            httpServletResponse.setCharacterEncoding("utf-8");
-            httpServletResponse.setContentType("text/html; charset=utf-8");
-            PrintWriter out = httpServletResponse.getWriter();
-            out.write(object.toJSONString());
-            return false;
-        }
+//        if (userId == null || "".equals(userId)) {
+//            JSONObject object = new JSONObject();
+//            object.put("errcode", ConstantUtil.ERROR_CODE_LOGIN);
+//            object.put("errmsg","未登录或长时间未操作，请登录");
+//            httpServletResponse.setCharacterEncoding("utf-8");
+//            httpServletResponse.setContentType("text/html; charset=utf-8");
+//            PrintWriter out = httpServletResponse.getWriter();
+//            out.write(object.toJSONString());
+//            return false;
+//        }
         return true;
     }
 

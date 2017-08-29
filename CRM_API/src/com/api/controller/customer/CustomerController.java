@@ -27,6 +27,7 @@ public class CustomerController {
     public void addCustomer(Customer customer, HttpServletResponse response) {
         JSONObject object = new JSONObject();
         PrintWriter out = null;
+
         try {
             out = response.getWriter();
 

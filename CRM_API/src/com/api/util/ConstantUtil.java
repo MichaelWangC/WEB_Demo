@@ -16,4 +16,11 @@ public class ConstantUtil {
     public static String ERROR_CODE_FAIL = "-1";
     public static String ERROR_CODE_LOGIN = "0";
 
+    // 初始密码
+    public static String INIT_PASSWORD = "888888";
+
+    // 角色编码
+    public  static String ROLE_ID_ADMINS = "1"; // 领导
+    public  static String ROLE_ID_MEMBERS = "2"; // 员工
+
 }

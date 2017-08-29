@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+namespace：必须与对应的接口全类名一致
+id:必须与对应接口的某个对应的方法名一致
+-->
+<mapper namespace="com.api.mapper.ContactorMapper">
+
+    <insert id="addContactor" parameterType="Contactor">
+        INSERT INTO tcontactor(
+            contactor_name,
+            contactor_mobile,
+            create_time,
+            modify_time,
+            password,
+            creator_id,
+            customer_id,
+            contactor_level
+        ) values (
+            #{contactor.contactorName},
+            #{contactor.contactorMobile},
+            sysdate(),
+            sysdate(),
+            #{contactor.password},
+            #{contactor.creatorId},
+            #{contactor.customerId},
+            #{contactor.contactorLevel});
+        <selectKey resultType="String" order="AFTER" keyProperty="contactor.contactorId">
+            SELECT LAST_INSERT_ID() AS contactorId
+        </selectKey>
+    </insert>
+</mapper>

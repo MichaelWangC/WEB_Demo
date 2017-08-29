@@ -6,6 +6,8 @@
     <typeAliases>
         <typeAlias alias="Supplier" type="com.api.beans.Supplier" />
         <typeAlias alias="Customer" type="com.api.beans.Customer" />
+        <typeAlias alias="Dictionary" type="com.api.beans.Dictionary" />
+        <typeAlias alias="Contactor" type="com.api.beans.Contactor" />
     </typeAliases>
     <!--
         说明：如果xxMapper.xml配置文件放在和xxMapper.java统一目录下，mappers也可以省略，因为org.mybatis.spring.mapper.MapperFactoryBean默认会去查找与xxMapper.java相同目录和名称的xxMapper.xml
@@ -13,6 +15,8 @@
     <mappers>
         <mapper resource="com/api/mapper/SupplierMapper.xml" />
         <mapper resource="com/api/mapper/CustomerMapper.xml" />
+        <mapper resource="com/api/mapper/DictionaryMapper.xml" />
+        <mapper resource="com/api/mapper/ContactorMapper.xml" />
     </mappers>
 
 </configuration>
