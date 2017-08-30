@@ -5,10 +5,47 @@
 namespace：必须与对应的接口全类名一致
 id:必须与对应接口的某个对应的方法名一致
 -->
-<mapper namespace="com.api.mapper.SupplierMapper">
+<mapper namespace="com.api.mapper.EmployeeMapper">
 
     <insert id="addEmployee" parameterType="com.api.beans.Employee">
-        
+      insert into temployee(
+	    employee_name,
+	    role_id,
+	    supplier_id,
+        employee_mobile,
+        password,
+        create_time,
+        modify_time)
+      values(
+		#{employeeName},
+		#{roleId},
+		#{supplierId},
+		#{employeeMobile},
+		#{password},
+		sysdate(),
+		sysdate());
+        <selectKey resultType="String" order="AFTER" keyProperty="employeeId">
+            SELECT LAST_INSERT_ID() AS employeeId
+        </selectKey>
     </insert>
 
+    <select id="getPassword" parameterType="String" resultType="String">
+        select password from temployee where employee_mobile = #{mobileno};
+    </select>
+
+    <select id="getEmployeeByMobile" parameterType="String" resultType="com.api.beans.Employee">
+        select
+          a.employee_id employeeId,
+          a.employee_name employeeName,
+          a.role_id roleId,
+          a.supplier_id supplierId,
+          a.employee_mobile employeeMobile,
+          b.supplier_name supplierName,
+          c.role_name roleName
+        from temployee a, tsupplier b, temployeerole c
+        where
+          a.employee_mobile = #{mobileno} and
+          a.supplier_id = b.supplier_id and
+          a.role_id = c.role_id;
+    </select>
 </mapper>

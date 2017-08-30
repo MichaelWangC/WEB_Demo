@@ -14,20 +14,39 @@ id:必须与对应接口的某个对应的方法名一致
             create_time,
             modify_time,
             password,
-            creator_id,
             customer_id,
-            contactor_level
+            role_id
         ) values (
             #{contactor.contactorName},
             #{contactor.contactorMobile},
             sysdate(),
             sysdate(),
             #{contactor.password},
-            #{contactor.creatorId},
             #{contactor.customerId},
-            #{contactor.contactorLevel});
+            #{contactor.roleId});
         <selectKey resultType="String" order="AFTER" keyProperty="contactor.contactorId">
             SELECT LAST_INSERT_ID() AS contactorId
         </selectKey>
     </insert>
+
+    <select id="getPassword" parameterType="String" resultType="String">
+        select password from tcontactor where contactor_mobile = #{mobileno};
+    </select>
+
+    <select id="getContactorByMobileno" parameterType="String" resultType="Contactor">
+        SELECT
+          a.contactor_id contactorId,
+          a.contactor_name contactorName,
+          a.role_id roleId,
+          a.contactor_mobile contactorMobile,
+          a.customer_id customerId,
+          b.customer_name customerName,
+          c.role_name roleName
+        FROM tcontactor a, tcustomer b, tcontactorrole c
+        WHERE
+          a.contactor_mobile = #{mobileno} AND
+          a.customer_id = b.customer_id AND
+          a.role_id = c.role_id
+    </select>
+
 </mapper>

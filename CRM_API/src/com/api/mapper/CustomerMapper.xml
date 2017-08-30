@@ -18,6 +18,9 @@ id:必须与对应接口的某个对应的方法名一致
           #{ownerId},
           sysdate(),
           sysdate());
+        <selectKey resultType="String" order="AFTER" keyProperty="customerId">
+            SELECT LAST_INSERT_ID() AS customerId
+        </selectKey>
     </insert>
 
     <!--<select id="getCustomerList" parameterMap="">-->

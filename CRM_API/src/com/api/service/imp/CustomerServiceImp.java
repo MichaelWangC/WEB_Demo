@@ -19,8 +19,9 @@ public class CustomerServiceImp implements CustomerService{
     private CustomerMapper mapper;
 
     @Override
-    public void addCustomer(Customer customer) {
+    public String addCustomer(Customer customer) {
         mapper.addCustomer(customer);
+        return  customer.getCustomerId();
     }
 
     @Override

@@ -24,11 +24,18 @@ public class ContactorServiceImp implements ContactorService {
         if (mobileno == null || "".equals(mobileno)) throw new Exception("请输入手机号");
         String contactorname = contactor.getContactorName();
         if (contactorname == null || "".equals(contactorname)) throw new Exception("请输入姓名");
+        String customerId = contactor.getCustomerId();
+        if (customerId == null || "".equals(customerId)) throw new Exception("请传入客户编号");
 
         // 密码处理
         String password = contactor.getPassword();
         if (password == null || "".equals(password)) {
             password = ConstantUtil.INIT_PASSWORD;
+        }
+        String roleId = contactor.getRoleId();
+        if (roleId == null || "".equals(roleId)) {
+            roleId = ConstantUtil.ROLE_ID_MEMBERS;
+            contactor.setRoleId(roleId);
         }
         String md5Pwd = SecurityUtil.getMD5Pwd(password);
         contactor.setPassword(md5Pwd);
@@ -36,5 +43,22 @@ public class ContactorServiceImp implements ContactorService {
         // 添加联系人
         contactorMapper.addContactor(contactor);
         return contactor.getContactorId();
+    }
+
+    @Override
+    public boolean checkPassword(String mobileno, String password) throws Exception {
+        if (mobileno == null || "".equals(mobileno)) throw new Exception("手机号不能为空");
+        if (password == null || "".equals(password)) throw new Exception("密码不能为空");
+
+        String tpassword = contactorMapper.getPassword(mobileno);
+        if (tpassword == null || "".equals(tpassword)) return false;
+
+        String passwordMd5 = SecurityUtil.getMD5Pwd(password);
+        return tpassword.equals(passwordMd5);
+    }
+
+    @Override
+    public Contactor getContactorByMobileno(String mobileno) {
+        return contactorMapper.getContactorByMobileno(mobileno);
     }
 }

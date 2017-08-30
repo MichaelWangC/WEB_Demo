@@ -10,4 +10,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface ContactorMapper {
     void addContactor(@Param("contactor") Contactor contactor);
+    String getPassword(String mobileno);
+    Contactor getContactorByMobileno(String mobileno);
 }

@@ -7,4 +7,8 @@ import com.api.beans.Contactor;
  */
 public interface ContactorService {
     String addContactor(Contactor contactor) throws Exception;
+
+    boolean checkPassword(String mobileno, String password) throws Exception;
+
+    Contactor getContactorByMobileno(String mobileno);
 }

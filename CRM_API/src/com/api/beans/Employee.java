@@ -12,6 +12,8 @@ public class Employee {
     private String password; // 密码
     private String createTime; // 创建时间
     private String modifyTime; // 修改时间
+    private String supplierName;
+    private String roleName;
 
     public String getEmployeeId() {
         return employeeId;
@@ -75,5 +77,21 @@ public class Employee {
 
     public void setModifyTime(String modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

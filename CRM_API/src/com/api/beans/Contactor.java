@@ -10,10 +10,10 @@ public class Contactor {
     private String createTime;
     private String modifyTime;
     private String password;
-    private String creatorId;
     private String customerId;
-    private String contactorLevel;
     private String roleId;
+    private String customerName;
+    private String roleName;
 
     public String getContactorId() {
         return contactorId;
@@ -63,14 +63,6 @@ public class Contactor {
         this.password = password;
     }
 
-    public String getCreatorId() {
-        return creatorId;
-    }
-
-    public void setCreatorId(String creatorId) {
-        this.creatorId = creatorId;
-    }
-
     public String getCustomerId() {
         return customerId;
     }
@@ -79,19 +71,27 @@ public class Contactor {
         this.customerId = customerId;
     }
 
-    public String getContactorLevel() {
-        return contactorLevel;
-    }
-
-    public void setContactorLevel(String contactorLevel) {
-        this.contactorLevel = contactorLevel;
-    }
-
     public String getRoleId() {
         return roleId;
     }
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }
