@@ -8,6 +8,7 @@ public class Customer {
     private String customerId;
     private String customerName;
     private String ownerId;
+    private String ownerName;
     private String createTime;
     private String modifyTime;
 
@@ -49,5 +50,13 @@ public class Customer {
 
     public void setModifyTime(String modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 }

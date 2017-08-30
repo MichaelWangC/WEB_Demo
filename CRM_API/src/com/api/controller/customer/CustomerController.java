@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * Created by wangc on 2017/8/24.
@@ -29,6 +30,13 @@ public class CustomerController {
     @Resource
     private ContactorService contactorService;
 
+    /**
+     * 添加客户
+     * @param customer
+     * @param contactor
+     * @param request
+     * @param response
+     */
     @RequestMapping("/addCustomer")
     public void addCustomer(Customer customer, Contactor contactor, HttpServletRequest request, HttpServletResponse response) {
         JSONObject object = new JSONObject();
@@ -102,15 +110,24 @@ public class CustomerController {
         }
     }
 
+    /**
+     * 查询客户列表
+     * @param start
+     * @param limit
+     * @param custname
+     * @param response
+     */
     @RequestMapping("/customerList")
-    public void getCustomerList(Integer start, Integer limit, String custname, HttpServletResponse response) {
+    public void getCustomerList(Integer start, Integer limit, String custname, String ownerId, String customerId, HttpServletResponse response) {
         JSONObject object = new JSONObject();
         PrintWriter out = null;
         try {
             out = response.getWriter();
 
+            List<Customer> list = customerService.getCustomerList(start, limit, custname, ownerId, customerId);
             object.put("errcode", ConstantUtil.ERROR_CODE_OK);
-            object.put("errmsg", "创建成功");
+            object.put("errmsg", "ok");
+            object.put("list", list);
         } catch (Exception e) {
             object.put("errcode", ConstantUtil.ERROR_CODE_FAIL);
             object.put("errmsg", e.getMessage());

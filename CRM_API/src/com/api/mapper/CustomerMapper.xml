@@ -23,7 +23,36 @@ id:必须与对应接口的某个对应的方法名一致
         </selectKey>
     </insert>
 
-    <!--<select id="getCustomerList" parameterMap="">-->
-        <!---->
-    <!--</select>-->
+    <select id="getCustomerList" resultType="Customer">
+        <![CDATA[
+            SELECT
+              a.customer_id customerId,
+              a.customer_name customerName,
+              a.owner_id ownerId,
+              b.supplier_name ownerName,
+              a.create_time createTime
+            FROM tcustomer a, tsupplier b
+            WHERE
+              a.owner_id = b.supplier_id and
+              a.is_disable = 1
+        ]]>
+        <if test="custname!=null and custname!=''">
+            <![CDATA[
+                and a.customer_name like #{custname}
+            ]]>
+        </if>
+        <if test="ownerId!=null and ownerId!=''">
+            <![CDATA[
+                and a.owner_id = #{ownerId}
+            ]]>
+        </if>
+        <if test="customerId!=null and customerId!=''">
+            <![CDATA[
+                and a.customer_id = #{customerId}
+            ]]>
+        </if>
+        <![CDATA[
+          LIMIT #{start},#{limit}
+        ]]>
+    </select>
 </mapper>

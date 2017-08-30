@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by wangc on 2017/8/24.
@@ -25,7 +26,20 @@ public class CustomerServiceImp implements CustomerService{
     }
 
     @Override
-    public void getCustomerList(String start, String limit, String custname) {
+    public List<Customer> getCustomerList(Integer start, Integer limit, String custname, String ownerId, String customerId) {
+        if (custname != null && !"".equals(custname)) {
+            custname = "%"+custname+"%";
+        }
+        if (start == null) {
+            start = 0;
+        } else {
+            start = (start-1)*limit;
+        }
 
+        if (limit == null) {
+            limit = 20;
+        }
+
+        return mapper.getCustomerList(start, limit, custname, ownerId, customerId);
     }
 }

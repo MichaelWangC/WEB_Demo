@@ -2,6 +2,7 @@ package com.api.mapper;
 
 import com.api.beans.Customer;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ import java.util.List;
 @Mapper
 public interface CustomerMapper {
     boolean addCustomer(Customer customer);
-    void getCustomerList(String start, String limit, String custname);
+    List<Customer> getCustomerList(@Param("start") Integer start, @Param("limit") Integer limit, @Param("custname") String custname, @Param("ownerId") String ownerId, @Param("customerId") String customerId);
 }
