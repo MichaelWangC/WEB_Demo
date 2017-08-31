@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Transactional
@@ -60,5 +61,22 @@ public class ContactorServiceImp implements ContactorService {
     @Override
     public Contactor getContactorByMobileno(String mobileno) {
         return contactorMapper.getContactorByMobileno(mobileno);
+    }
+
+    @Override
+    public List<Contactor> getContactorList(Integer start, Integer limit, String contactorName, Integer customerId) {
+        if (contactorName != null && !"".equals(contactorName)) {
+            contactorName = "%"+contactorName+"%";
+        }
+        if (start == null) {
+            start = 0;
+        } else {
+            start = (start-1)*limit;
+        }
+
+        if (limit == null) {
+            limit = 20;
+        }
+        return contactorMapper.getContactorList(start, limit, contactorName, customerId);
     }
 }

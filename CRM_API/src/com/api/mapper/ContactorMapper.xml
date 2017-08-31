@@ -49,4 +49,30 @@ id:必须与对应接口的某个对应的方法名一致
           a.role_id = c.role_id
     </select>
 
+    <select id="getContactorList" resultType="Contactor">
+        SELECT
+          a.contactor_id contactorId,
+          a.contactor_name contactorName,
+          a.role_id roleId,
+          a.contactor_mobile contactorMobile,
+          a.customer_id customerId,
+          b.customer_name customerName,
+          c.role_name roleName
+        FROM tcontactor a, tcustomer b, tcontactorrole c
+        WHERE
+          a.role_id = c.role_id AND
+          a.customer_id = b.customer_id
+        <if test="contactorName!=null and contactorName!=''">
+            <![CDATA[
+                and a.contactor_name like #{contactorName}
+            ]]>
+        </if>
+        <if test="customerId!=null and customerId!=''">
+            <![CDATA[
+                and a.customer_id = #{customerId}
+            ]]>
+        </if>
+        LIMIT #{start},#{limit}
+    </select>
+
 </mapper>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * 联系人
@@ -42,6 +43,28 @@ public class ContactorController {
             object.put("errcode", ConstantUtil.ERROR_CODE_FAIL);
             object.put("errmsg", "该手机号码已被注册");
             e.printStackTrace();
+        } catch (Exception e) {
+            object.put("errcode", ConstantUtil.ERROR_CODE_FAIL);
+            object.put("errmsg", e.getMessage());
+            e.printStackTrace();
+        } finally {
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("text/html; charset=utf-8");
+            out.write(object.toJSONString());
+        }
+    }
+
+    @RequestMapping("/contactorList")
+    public void getContactorList(Integer start, Integer limit, String contactorName, Integer customerId, HttpServletResponse response) {
+        JSONObject object = new JSONObject();
+        PrintWriter out = null;
+        try {
+            out = response.getWriter();
+
+            List<Contactor> list = contactorService.getContactorList(start, limit, contactorName, customerId);
+            object.put("errcode", ConstantUtil.ERROR_CODE_OK);
+            object.put("errmsg", "ok");
+            object.put("list", list);
         } catch (Exception e) {
             object.put("errcode", ConstantUtil.ERROR_CODE_FAIL);
             object.put("errmsg", e.getMessage());
