@@ -12,7 +12,7 @@
 -- 创建数据库时,设置数据库的编码方式 
 -- CHARACTER SET:指定数据库采用的字符集,utf8不能写成utf-8
 -- COLLATE:指定数据库字符集的排序规则,utf8的默认排序规则为utf8_general_ci（通过show character set查看）
-drop database if EXISTS CRMDB;
+-- drop database if EXISTS CRMDB;
 create database IF NOT EXISTS CRMDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 use CRMDB;
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS temployee (
 	password text comment '密码',
 	create_time DATETIME comment '创建时间',
 	modify_time DATETIME comment '修改时间',
-	is_disable tinyint(1) NOT NULL DEFAULT 1, -- 是否可使用 1可使用 0不可使用
+	is_disable tinyint(1) NOT NULL DEFAULT 1 comment '是否可使用 1可使用 0不可使用',
 	PRIMARY KEY ( employee_id )
 )CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -50,12 +50,12 @@ CREATE TABLE IF NOT EXISTS temployee (
 -- -------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS tcustomer (
 	customer_id int AUTO_INCREMENT,
-	customer_name char(40) UNIQUE, -- 客户名称
-	owner_id int, -- 关联供应商表 tsupplier supplier_id
-	creator_id int, -- 关联 员工表 employee_id
-	create_time DATETIME, -- 创建时间
-	modify_time DATETIME, -- 修改时间
-	is_disable tinyint(1) NOT NULL DEFAULT 1, -- 是否可使用 1可使用 0不可使用
+	customer_name char(40) UNIQUE comment '客户名称',
+	owner_id int comment '关联供应商表 tsupplier supplier_id',
+	creator_id int comment '关联 员工表 employee_id',
+	create_time DATETIME comment '创建时间',
+	modify_time DATETIME comment '修改时间',
+	is_disable tinyint(1) NOT NULL DEFAULT 1 comment '是否可使用 1可使用 0不可使用',
 	PRIMARY KEY ( customer_id )
 )CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -65,13 +65,13 @@ CREATE TABLE IF NOT EXISTS tcustomer (
 CREATE TABLE IF NOT EXISTS tcontactor (
 	contactor_id int AUTO_INCREMENT,
 	contactor_name char(40),
-	role_id int, -- 角色id 关联联系人角色表 employee role
-	contactor_mobile char(20) UNIQUE, -- 手机号
-	create_time DATETIME, -- 创建时间
-	modify_time DATETIME, -- 修改时间
-	password char(40),  -- 密码
-	customer_id int, -- 关联 客户表 customer_id
-	is_disable tinyint(1) NOT NULL DEFAULT 1, -- 是否可使用 1可使用 0不可使用
+	role_id int comment '角色id 关联联系人角色表 employee role',
+	contactor_mobile char(20) UNIQUE comment '手机号',
+	create_time DATETIME comment '创建时间',
+	modify_time DATETIME comment '修改时间',
+	password char(40) comment '密码',
+	customer_id int comment '关联 客户表 customer_id',
+	is_disable tinyint(1) NOT NULL DEFAULT 1 comment '是否可使用 1可使用 0不可使用',
 	PRIMARY KEY ( contactor_id )
 )CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -80,16 +80,17 @@ CREATE TABLE IF NOT EXISTS tcontactor (
 -- -------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS ttemplet (
 	templet_id int AUTO_INCREMENT,
-	supplier_id int, -- 供应商id 关联供应商表
-	customer_id int,-- 客户id 关联客户表
-	contactor_id int, -- 联系人id 关联联系人表contactor
-	goods_id char(40), -- 实物编号
-	templet_require text, -- 要求
-	create_time DATETIME, -- 创建时间
-	modify_time DATETIME, -- 修改时间
-	created_id int, -- 创建人id  关联员工表 employee
-	status varchar(40), -- 当前状态
-	is_disable tinyint(1) NOT NULL DEFAULT 1, -- 是否可使用 1可使用 0不可使用
+	supplier_id int comment '供应商id 关联供应商表',
+	customer_id int comment '客户id 关联客户表',
+	contactor_id int comment '联系人id 关联联系人表contactor',
+	goods_id char(40) comment '实物编号',
+	templet_require text comment '要求',
+	create_time DATETIME comment '创建时间',
+	modify_time DATETIME comment '修改时间',
+	image_urls text comment '图片地址',
+	created_id int comment '创建人id  关联员工表 employee',
+	status varchar(40) comment '当前状态',
+	is_disable tinyint(1) NOT NULL DEFAULT 1 comment '是否可使用 1可使用 0不可使用',
 	PRIMARY KEY ( templet_id )
 )CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -98,9 +99,9 @@ CREATE TABLE IF NOT EXISTS ttemplet (
 -- -------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS ttempletstatus (
 	status_id int AUTO_INCREMENT,
-	create_time DATETIME, -- 创建时间
-	templet_id int, -- 样板id 关联样板表 templet
-	change_info varchar(255), -- 变更信息
+	create_time DATETIME comment '创建时间',
+	templet_id int comment '样板id 关联样板表 templet',
+	change_info varchar(255) comment '变更信息',
 	PRIMARY KEY ( status_id )
 )CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -109,15 +110,15 @@ CREATE TABLE IF NOT EXISTS ttempletstatus (
 -- -------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS torder (
 	order_id int AUTO_INCREMENT,
-	supplier_id int, -- 供应商id 关联供应商表
-	customer_id int,-- 客户id 关联客户表
-	order_num int, -- 数量
-	style_number varchar(40), -- 款号
-	create_time DATETIME, -- 创建时间
-	modify_time DATETIME, -- 修改时间
-	created_id int, -- 创建人id  关联员工表 employee
-	status varchar(40), -- 当前状态
-	is_disable tinyint(1) NOT NULL DEFAULT 1, -- 是否可使用 1可使用 0不可使用
+	supplier_id int comment '供应商id 关联供应商表',
+	customer_id int comment '客户id 关联客户表',
+	order_num int comment '数量',
+	style_number varchar(40) comment '款号',
+	create_time DATETIME comment '创建时间',
+	modify_time DATETIME comment '修改时间',
+	created_id int comment '创建人id  关联员工表 employee',
+	status varchar(40) comment '当前状态',
+	is_disable tinyint(1) NOT NULL DEFAULT 1 comment '是否可使用 1可使用 0不可使用',
 	PRIMARY KEY ( order_id )
 )CHARACTER SET utf8 COLLATE utf8_general_ci;
 

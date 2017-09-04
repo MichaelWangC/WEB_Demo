@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+namespace：必须与对应的接口全类名一致
+id:必须与对应接口的某个对应的方法名一致
+-->
+<mapper namespace="com.api.mapper.TempletListMapper">
+
+    <insert id="addTemplet" parameterType="com.api.beans.NewTemplet">
+        insert into ttemplet(
+            supplier_id,
+            customer_id,
+            contactor_id,
+            goods_id,
+            templet_require,
+            create_time,
+            modify_time,
+            image_urls,
+            created_id,
+            status
+        )values(
+            #{supplierId},
+            #{customerId},
+            #{contactorId},
+            #{goodsId},
+            #{templetRequire},
+            sysdate(),
+            sysdate(),
+            #{imageUrls},
+            #{createdId},
+            #{status});
+        <selectKey resultType="String" order="AFTER" keyProperty="templetId">
+            SELECT LAST_INSERT_ID() AS templetId
+        </selectKey>
+    </insert>
+
+    <select id="templetList" parameterType="com.api.beans.NewTemplet" resultType="com.api.beans.NewTemplet">
+        SELECT
+          a.templet_id templetId,
+          a.supplier_id supplierId,
+          b.supplier_name supplierName,
+          a.customer_id customerId,
+          d.customer_name customerName,
+          a.contactor_id contactorId,
+          e.contactor_name contactorName,
+          a.goods_id goodsId,
+          a.templet_require templetRequire,
+          a.image_urls imageUrls,
+          a.created_id createdId,
+          c.employee_name createdName,
+          a.status status,
+          a.create_time createTime,
+          a.modify_time modifyTime
+        FROM ttemplet a, tsupplier b, temployee c, tcustomer d, tcontactor e
+        WHERE
+          a.supplier_id = b.supplier_id AND
+          a.customer_id = d.customer_id AND
+          a.contactor_id = e.contactor_id AND
+          a.created_id = c.employee_id AND
+          a.is_disable = 1
+        <if test="supplierId!=null and supplierId!=''">
+            <![CDATA[
+              and a.supplier_id = #{supplierId}
+            ]]>
+        </if>
+        <if test="customerId!=null and customerId!=''">
+            <![CDATA[
+              and a.customer_id = #{customerId}
+            ]]>
+        </if>
+        <if test="contactorId!=null and contactorId!=''">
+            <![CDATA[
+              and a.contactor_id = #{contactorId}
+            ]]>
+        </if>
+        <![CDATA[
+          LIMIT #{start},#{limit}
+        ]]>
+    </select>
+
+    <update id="updateTempletStatus" parameterType="com.api.beans.NewTemplet">
+        UPDATE ttemplet SET
+          status = #{status}
+        WHERE templet_id = #{templetId}
+    </update>
+
+    <insert id="updateTempletStatusLog" parameterType="String">
+        INSERT into ttempletstatus(
+          create_time,
+          templet_id,
+          change_info
+        ) VALUES (
+          sysdate(),
+          #{templetId},
+          #{changeInfo}
+        )
+    </insert>
+
+    <select id="getTempletStatusLog" parameterType="String" resultType="com.api.beans.NewTempletStatus">
+        SELECT
+          status_id statusId,
+          create_time createTime,
+          templet_id templetId,
+          change_info changeInfo
+        FROM ttempletstatus
+        WHERE templet_id = #{templetId}
+    </select>
+
+</mapper>

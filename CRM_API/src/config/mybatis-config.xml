@@ -17,6 +17,7 @@
         <mapper resource="com/api/mapper/CustomerMapper.xml" />
         <mapper resource="com/api/mapper/DictionaryMapper.xml" />
         <mapper resource="com/api/mapper/ContactorMapper.xml" />
+        <mapper resource="com/api/mapper/TempletListMapper.xml" />
     </mappers>
 
 </configuration>
